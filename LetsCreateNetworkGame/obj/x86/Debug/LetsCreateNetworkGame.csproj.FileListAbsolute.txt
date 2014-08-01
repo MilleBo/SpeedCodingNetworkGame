@@ -1,0 +1,12 @@
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\SDL.dll
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\LetsCreateNetworkGame.exe
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\LetsCreateNetworkGame.pdb
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Lidgren.Network.dll
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\MonoGame.Framework.dll
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\OpenTK.dll
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Tao.Sdl.dll
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\obj\x86\Debug\LetsCreateNetworkGame.csprojResolveAssemblyReference.cache
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\obj\x86\Debug\LetsCreateNetworkGame.exe
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\obj\x86\Debug\LetsCreateNetworkGame.pdb
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\LetsCreateNetworkGame.Library.dll
+c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\LetsCreateNetworkGame.Library.pdb
