@@ -10,18 +10,22 @@ using Lidgren.Network;
 
 namespace LetsCreateNetworkGame
 {
-    class NetworkConnection
+    class ManagerNetwork
     {
-        private NetClient _client; 
+        private NetClient _client;
+        public Player Player { get; set; }
+
+        public bool Active { get; set; }
 
         public bool Start()
         {
-            var loginInformation = new NetworkLoginInformation() {Name = "RandomName"}; 
+            var random = new Random(); 
             _client = new NetClient(new NetPeerConfiguration("networkGame"));
             _client.Start();
+            Player = new Player("name_" + random.Next(0, 100),0,0);
             var outmsg = _client.CreateMessage();
             outmsg.Write((byte)PacketType.Login);
-            outmsg.WriteAllProperties(loginInformation);
+            outmsg.Write(Player.Name);
             _client.Connect("localhost", 14241, outmsg);
             return EsablishInfo(); 
         }
@@ -45,20 +49,17 @@ namespace LetsCreateNetworkGame
                         var data = inc.ReadByte();
                         if (data == (byte) PacketType.Login)
                         {
-                            var accepted = inc.ReadBoolean();
-                            if (accepted)
+                            Active = inc.ReadBoolean();
+                            if (Active)
                             {
+                                Player.XPosition = inc.ReadInt32();
+                                Player.YPosition = inc.ReadInt32();
                                 return true;
                             }
-                            else
-                            {
-                                return false;
-                            }
+
+                            return false;
                         }
-                        else
-                        {
-                            return false; 
-                        }
+                        return false;
                 }
             }
 

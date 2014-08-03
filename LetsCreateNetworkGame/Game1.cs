@@ -20,15 +20,16 @@ namespace LetsCreateNetworkGame
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private NetworkConnection _networkConnection;
+        private ManagerNetwork _managerNetwork;
         private Color _color; //For test
+        private Texture2D _texture; //For test
 
         public Game1()
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            _networkConnection = new NetworkConnection();
+            _managerNetwork = new ManagerNetwork();
             _color = Color.CornflowerBlue;
         }
 
@@ -42,7 +43,7 @@ namespace LetsCreateNetworkGame
         {
             // TODO: Add your initialization logic here
 
-            if (_networkConnection.Start())
+            if (_managerNetwork.Start())
             {
                 _color = Color.Green;
             }
@@ -61,6 +62,7 @@ namespace LetsCreateNetworkGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            _texture = Content.Load<Texture2D>("white_background");
 
             // TODO: use this.Content to load your game content here
         }
@@ -97,7 +99,12 @@ namespace LetsCreateNetworkGame
         {
             GraphicsDevice.Clear(_color);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            if (_managerNetwork.Active)
+            {
+                spriteBatch.Draw(_texture, new Rectangle(_managerNetwork.Player.XPosition, _managerNetwork.Player.YPosition, 50, 50), Color.Black);
+            }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
