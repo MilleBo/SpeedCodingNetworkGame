@@ -88,6 +88,7 @@ namespace LetsCreateNetworkGame
 
             // TODO: Add your update logic here
 
+            _managerNetwork.Update();
             base.Update(gameTime);
         }
 
@@ -103,6 +104,10 @@ namespace LetsCreateNetworkGame
             if (_managerNetwork.Active)
             {
                 spriteBatch.Draw(_texture, new Rectangle(_managerNetwork.Player.XPosition, _managerNetwork.Player.YPosition, 50, 50), Color.Black);
+                foreach (var otherPlayer in _managerNetwork.OtherPlayers)
+                {
+                    spriteBatch.Draw(_texture,new Rectangle(otherPlayer.XPosition,otherPlayer.YPosition,50,50),Color.BlueViolet);
+                }            
             }
             spriteBatch.End();
 

@@ -8,6 +8,8 @@ namespace LetsCreateNetworkGame.Library
 {
     public enum PacketType
     {
-        Login
+        Login,
+        NewPlayer,
+        AllPlayers
     }
 }
