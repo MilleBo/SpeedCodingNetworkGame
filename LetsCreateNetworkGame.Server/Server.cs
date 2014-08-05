@@ -86,10 +86,9 @@ namespace LetsCreateNetworkGame.Server
                 outmsg.Write((int) player.XPosition);
                 outmsg.Write((int) player.YPosition);
                 outmsg.Write(_players.Count-1);
-                foreach (var player1 in _players)
+                for(int n = 0; n < _players.Count - 1; n++)
                 {   
-                    if(player.Name != player1.Name)
-                        outmsg.WriteAllProperties(player1);
+                   outmsg.WriteAllProperties(_players[n]);
                 }
                 _server.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);          
                 SendNewPlayer(player,inc);
