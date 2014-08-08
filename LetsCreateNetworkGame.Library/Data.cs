@@ -9,7 +9,8 @@ namespace LetsCreateNetworkGame.Library
     public enum PacketType
     {
         Login,
-        NewPlayer,
-        AllPlayers
+        PlayerPosition,
+        AllPlayers,
+        Input
     }
 }

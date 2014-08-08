@@ -24,5 +24,6 @@ namespace LetsCreateNetworkGame.Library
         }
 
         public Player() { }
+
     }
 }

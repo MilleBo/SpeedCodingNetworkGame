@@ -5,6 +5,8 @@
 // Youtube channel - https://www.youtube.com/user/Maloooon
 //------------------------------------------------------
 #region Using Statements
+
+using LetsCreateNetworkGame.Manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -21,6 +23,7 @@ namespace LetsCreateNetworkGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private ManagerNetwork _managerNetwork;
+        private ManagerInput _managerInput; 
         private Color _color; //For test
         private Texture2D _texture; //For test
 
@@ -30,6 +33,7 @@ namespace LetsCreateNetworkGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             _managerNetwork = new ManagerNetwork();
+            _managerInput = new ManagerInput(_managerNetwork);
             _color = Color.CornflowerBlue;
         }
 
@@ -89,6 +93,7 @@ namespace LetsCreateNetworkGame
             // TODO: Add your update logic here
 
             _managerNetwork.Update();
+            _managerInput.Update(gameTime.ElapsedGameTime.Milliseconds);
             base.Update(gameTime);
         }
 
@@ -103,10 +108,9 @@ namespace LetsCreateNetworkGame
             spriteBatch.Begin();
             if (_managerNetwork.Active)
             {
-                spriteBatch.Draw(_texture, new Rectangle(_managerNetwork.Player.XPosition, _managerNetwork.Player.YPosition, 50, 50), Color.Black);
-                foreach (var otherPlayer in _managerNetwork.OtherPlayers)
+                foreach (var player in _managerNetwork.Players)
                 {
-                    spriteBatch.Draw(_texture,new Rectangle(otherPlayer.XPosition,otherPlayer.YPosition,50,50),Color.BlueViolet);
+                    spriteBatch.Draw(_texture,new Rectangle(player.XPosition,player.YPosition,50,50),Color.BlueViolet);
                 }            
             }
             spriteBatch.End();

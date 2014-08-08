@@ -6,8 +6,10 @@
 //------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LetsCreateNetworkGame.Library;
 using Lidgren.Network;
+using Microsoft.Xna.Framework.Input;
 
 namespace LetsCreateNetworkGame.Server
 {
@@ -45,7 +47,7 @@ namespace LetsCreateNetworkGame.Server
                         ConnectionApproval(inc);
                         break;
                     case NetIncomingMessageType.Data:
-
+                        Data(inc); 
                         break;
                     case NetIncomingMessageType.Receipt:
                         break;
@@ -71,6 +73,57 @@ namespace LetsCreateNetworkGame.Server
             }
         }
 
+        private void Data(NetIncomingMessage inc)
+        {
+            var packetType = (PacketType) inc.ReadByte();
+
+           
+            switch (packetType)
+            {
+                case PacketType.Input:
+                    Input(inc);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+
+        }
+
+        private void Input(NetIncomingMessage inc)
+        {
+            Console.WriteLine("Received new input");
+            var key = (Keys)inc.ReadByte();
+            var name = inc.ReadString();
+            var player = _players.FirstOrDefault(p => p.Name == name);
+            if (player == null)
+            {
+                Console.WriteLine("Could not find player with name {0}", name);
+                return;
+            }
+ 
+            switch (key)
+            {
+                case Keys.Down:
+                    player.YPosition++;
+                    break;
+
+                case Keys.Up:
+                    player.YPosition--;
+                    break;
+
+                case Keys.Left:
+                    player.XPosition--;
+                    break;
+
+                case Keys.Right:
+                    player.XPosition++;
+                    break;
+            }
+
+            SendPlayerPosition(player,inc); 
+        }
+
         private void ConnectionApproval(NetIncomingMessage inc)
         {
             Console.WriteLine("New connection...");
@@ -83,15 +136,13 @@ namespace LetsCreateNetworkGame.Server
                 var outmsg = _server.CreateMessage();
                 outmsg.Write((byte)PacketType.Login);
                 outmsg.Write(true);
-                outmsg.Write((int) player.XPosition);
-                outmsg.Write((int) player.YPosition);
-                outmsg.Write(_players.Count-1);
-                for(int n = 0; n < _players.Count - 1; n++)
+                outmsg.Write(_players.Count);
+                for(int n = 0; n < _players.Count; n++)
                 {   
                    outmsg.WriteAllProperties(_players[n]);
                 }
                 _server.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);          
-                SendNewPlayer(player,inc);
+                SendPlayerPosition(player,inc);
             }
             else
             {
@@ -112,13 +163,13 @@ namespace LetsCreateNetworkGame.Server
             return player;
         }
 
-        private void SendNewPlayer(Player player, NetIncomingMessage inc)
+        private void SendPlayerPosition(Player player, NetIncomingMessage inc)
         {
             Console.WriteLine("Sending out new player position");
             var outmessage = _server.CreateMessage();
-            outmessage.Write((byte)PacketType.NewPlayer);
+            outmessage.Write((byte)PacketType.PlayerPosition);
             outmessage.WriteAllProperties(player);
-            _server.SendToAll(outmessage,inc.SenderConnection,NetDeliveryMethod.ReliableOrdered,0);
+            _server.SendToAll(outmessage,NetDeliveryMethod.ReliableOrdered);
         }
 
         private void SendFullPlayerList()
