@@ -11,3 +11,4 @@ c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsC
 c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\LetsCreateNetworkGame.Library.dll
 c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\LetsCreateNetworkGame.Library.pdb
 c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Content\white_background.xnb
+C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Content\font.xnb

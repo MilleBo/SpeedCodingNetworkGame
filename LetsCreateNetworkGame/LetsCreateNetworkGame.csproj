@@ -64,7 +64,11 @@
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Content\font.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LetsCreateNetworkGame.Library\LetsCreateNetworkGame.Library.csproj">
       <Project>{b6abcc06-ce61-434a-bbc0-60ffb42ef7eb}</Project>

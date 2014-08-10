@@ -7,7 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using LetsCreateNetworkGame.Library;
+using LetsCreateNetworkGame.Server.Commands;
 using Lidgren.Network;
 using Microsoft.Xna.Framework.Input;
 
@@ -37,38 +39,13 @@ namespace LetsCreateNetworkGame.Server
                 if ((inc = _server.ReadMessage()) == null) continue;
                 switch (inc.MessageType)
                 {
-                    case NetIncomingMessageType.Error:
-                        break;
-                    case NetIncomingMessageType.StatusChanged:
-                        break;
-                    case NetIncomingMessageType.UnconnectedData:
-                        break;
                     case NetIncomingMessageType.ConnectionApproval:
-                        ConnectionApproval(inc);
+                        var login = new LoginCommand();
+                        login.Run(_server,inc, null,_players);
                         break;
                     case NetIncomingMessageType.Data:
                         Data(inc); 
                         break;
-                    case NetIncomingMessageType.Receipt:
-                        break;
-                    case NetIncomingMessageType.DiscoveryRequest:
-                        break;
-                    case NetIncomingMessageType.DiscoveryResponse:
-                        break;
-                    case NetIncomingMessageType.VerboseDebugMessage:
-                        break;
-                    case NetIncomingMessageType.DebugMessage:
-                        break;
-                    case NetIncomingMessageType.WarningMessage:
-                        break;
-                    case NetIncomingMessageType.ErrorMessage:
-                        break;
-                    case NetIncomingMessageType.NatIntroductionSuccess:
-                        break;
-                    case NetIncomingMessageType.ConnectionLatencyUpdated:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -76,113 +53,8 @@ namespace LetsCreateNetworkGame.Server
         private void Data(NetIncomingMessage inc)
         {
             var packetType = (PacketType) inc.ReadByte();
-
-           
-            switch (packetType)
-            {
-                case PacketType.Input:
-                    Input(inc);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-
-        }
-
-        private void Input(NetIncomingMessage inc)
-        {
-            Console.WriteLine("Received new input");
-            var key = (Keys)inc.ReadByte();
-            var name = inc.ReadString();
-            var player = _players.FirstOrDefault(p => p.Name == name);
-            if (player == null)
-            {
-                Console.WriteLine("Could not find player with name {0}", name);
-                return;
-            }
- 
-            switch (key)
-            {
-                case Keys.Down:
-                    player.YPosition++;
-                    break;
-
-                case Keys.Up:
-                    player.YPosition--;
-                    break;
-
-                case Keys.Left:
-                    player.XPosition--;
-                    break;
-
-                case Keys.Right:
-                    player.XPosition++;
-                    break;
-            }
-
-            SendPlayerPosition(player,inc); 
-        }
-
-        private void ConnectionApproval(NetIncomingMessage inc)
-        {
-            Console.WriteLine("New connection...");
-            var data = inc.ReadByte();
-            if (data == (byte)PacketType.Login)
-            {
-                Console.WriteLine("..connection accpeted.");
-                var player = CreatePlayer(inc);
-                inc.SenderConnection.Approve();
-                var outmsg = _server.CreateMessage();
-                outmsg.Write((byte)PacketType.Login);
-                outmsg.Write(true);
-                outmsg.Write(_players.Count);
-                for(int n = 0; n < _players.Count; n++)
-                {   
-                   outmsg.WriteAllProperties(_players[n]);
-                }
-                _server.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);          
-                SendPlayerPosition(player,inc);
-            }
-            else
-            {
-                inc.SenderConnection.Deny("Didn't send correct information.");
-            }
-        }
-
-        private Player CreatePlayer(NetIncomingMessage inc)
-        {
-            var random = new Random();
-            var player = new Player
-                         {
-                             Name = inc.ReadString(),
-                             XPosition = random.Next(0, 750),
-                             YPosition = random.Next(0, 420)
-                         };
-            _players.Add(player);
-            return player;
-        }
-
-        private void SendPlayerPosition(Player player, NetIncomingMessage inc)
-        {
-            Console.WriteLine("Sending out new player position");
-            var outmessage = _server.CreateMessage();
-            outmessage.Write((byte)PacketType.PlayerPosition);
-            outmessage.WriteAllProperties(player);
-            _server.SendToAll(outmessage,NetDeliveryMethod.ReliableOrdered);
-        }
-
-        private void SendFullPlayerList()
-        {
-            Console.WriteLine("Sending full player list");
-            var outmessage = _server.CreateMessage(); 
-            outmessage.Write((byte)PacketType.AllPlayers);
-            outmessage.Write(_players.Count);
-            foreach (var player in _players)
-            {
-                outmessage.WriteAllProperties(player);
-            }
-            _server.SendToAll(outmessage, NetDeliveryMethod.ReliableOrdered);
+            var command = PacketFactory.GetCommand(packetType); 
+            command.Run(_server,inc, null,_players);
         }
     }
 }

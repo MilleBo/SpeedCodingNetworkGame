@@ -26,6 +26,7 @@ namespace LetsCreateNetworkGame
         private ManagerInput _managerInput; 
         private Color _color; //For test
         private Texture2D _texture; //For test
+        private SpriteFont _font; //For test
 
         public Game1()
             : base()
@@ -67,6 +68,7 @@ namespace LetsCreateNetworkGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             _texture = Content.Load<Texture2D>("white_background");
+            _font = Content.Load<SpriteFont>("font");
 
             // TODO: use this.Content to load your game content here
         }
@@ -110,7 +112,11 @@ namespace LetsCreateNetworkGame
             {
                 foreach (var player in _managerNetwork.Players)
                 {
-                    spriteBatch.Draw(_texture,new Rectangle(player.XPosition,player.YPosition,50,50),Color.BlueViolet);
+                    spriteBatch.Draw(_texture,new Rectangle(player.XPosition,player.YPosition,100,50),Color.BlueViolet);
+                    if (player.Username != _managerNetwork.Username)
+                    {
+                        spriteBatch.DrawString(_font, string.Format("<{0}>",player.Username), new Vector2(player.XPosition + 20, player.YPosition + 20), Color.Black);
+                    }
                 }            
             }
             spriteBatch.End();

@@ -109,9 +109,9 @@ namespace LetsCreateNetworkGame
         {
             var player = new Player();
             inc.ReadAllProperties(player);
-            if (Players.Any(p => p.Name == player.Name))
+            if (Players.Any(p => p.Username == player.Username))
             {
-                var oldPlayer = Players.FirstOrDefault(p => p.Name == player.Name);
+                var oldPlayer = Players.FirstOrDefault(p => p.Username == player.Username);
                 oldPlayer.XPosition = player.XPosition;
                 oldPlayer.YPosition = player.YPosition;
             }

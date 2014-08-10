@@ -12,13 +12,13 @@ namespace LetsCreateNetworkGame.Library
 {
     public class Player
     {
-        public string Name { get; set; }
+        public string Username { get; set; }
         public int XPosition { get; set; }
         public int YPosition { get; set; }
 
-        public Player(string name, int xPosition, int yPosition)
+        public Player(string username, int xPosition, int yPosition)
         {
-            Name = name;
+            Username = username;
             XPosition = xPosition;
             YPosition = yPosition;
         }
