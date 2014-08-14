@@ -7,19 +7,20 @@
 using System;
 using System.Collections.Generic;
 using LetsCreateNetworkGame.Library;
+using LetsCreateNetworkGame.Server.Managers;
 using Lidgren.Network;
 
 namespace LetsCreateNetworkGame.Server.Commands
 {
     class LoginCommand : ICommand
     {
-        public void Run(NetServer server, NetIncomingMessage inc, Player player, List<Player> players)
+        public void Run(ManagerLogger managerLogger, NetServer server, NetIncomingMessage inc, Player player, List<Player> players)
         {
-            Console.WriteLine("New connection...");
+            managerLogger.AddLogMessage("server", "New connection...");
             var data = inc.ReadByte();
             if (data == (byte)PacketType.Login)
             {
-                Console.WriteLine("..connection accpeted.");
+                managerLogger.AddLogMessage("server", "..connection accpeted.");
                 player = CreatePlayer(inc,players);
                 inc.SenderConnection.Approve();
                 var outmsg = server.CreateMessage();
@@ -32,7 +33,7 @@ namespace LetsCreateNetworkGame.Server.Commands
                 }
                 server.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
                 var command = new PlayerPositionCommand();
-                command.Run(server,inc,player,players);
+                command.Run(managerLogger, server,inc,player,players);
             }
             else
             {

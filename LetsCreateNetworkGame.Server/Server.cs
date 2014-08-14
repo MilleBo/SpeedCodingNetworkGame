@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Configuration;
 using LetsCreateNetworkGame.Library;
 using LetsCreateNetworkGame.Server.Commands;
+using LetsCreateNetworkGame.Server.Managers;
 using Lidgren.Network;
 using Microsoft.Xna.Framework.Input;
 
@@ -17,22 +18,25 @@ namespace LetsCreateNetworkGame.Server
 {
     class Server
     {
+        private readonly ManagerLogger _managerLogger;
         private List<Player> _players;
         private NetPeerConfiguration _config;
         private NetServer _server; 
 
-        public Server()
+        public Server(ManagerLogger managerLogger)
         {
+            _managerLogger = managerLogger;
             _players = new List<Player>();
             _config = new NetPeerConfiguration("networkGame") { Port = 14241 };
             _config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
-            _server = new NetServer(_config);
+            _server = new NetServer(_config);      
         }
 
         public void Run()
         {
             _server.Start();
             Console.WriteLine("Server started...");
+            _managerLogger.AddLogMessage("Server","Server started...");
             while (true)
             {
                 NetIncomingMessage inc;
@@ -41,7 +45,7 @@ namespace LetsCreateNetworkGame.Server
                 {
                     case NetIncomingMessageType.ConnectionApproval:
                         var login = new LoginCommand();
-                        login.Run(_server,inc, null,_players);
+                        login.Run(_managerLogger, _server,inc, null,_players);
                         break;
                     case NetIncomingMessageType.Data:
                         Data(inc); 
@@ -54,7 +58,7 @@ namespace LetsCreateNetworkGame.Server
         {
             var packetType = (PacketType) inc.ReadByte();
             var command = PacketFactory.GetCommand(packetType); 
-            command.Run(_server,inc, null,_players);
+            command.Run(_managerLogger, _server,inc, null,_players);
         }
     }
 }

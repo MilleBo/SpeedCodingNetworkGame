@@ -9,3 +9,5 @@ c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsC
 c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.pdb
 C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\Microsoft.Xna.Framework.dll
 C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\Microsoft.Xna.Framework.xml
+C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.Forms.MainForm.resources
+C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.csproj.GenerateResource.Cache

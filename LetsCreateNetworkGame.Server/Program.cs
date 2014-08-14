@@ -6,17 +6,23 @@
 //------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.Net.Mime;
+using System.Windows.Forms;
 using LetsCreateNetworkGame.Library;
+using LetsCreateNetworkGame.Server.Forms;
 using Lidgren.Network;
 
 namespace LetsCreateNetworkGame.Server
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+
+        [STAThread]
+        static void Main()
         {
-            var server = new Server(); 
-            server.Run();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(true);
+            Application.Run(new MainForm());
         }
     }
 }
