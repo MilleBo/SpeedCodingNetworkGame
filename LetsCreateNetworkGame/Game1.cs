@@ -48,14 +48,7 @@ namespace LetsCreateNetworkGame
         {
             // TODO: Add your initialization logic here
 
-            if (_managerNetwork.Start())
-            {
-                _color = Color.Green;
-            }
-            else
-            {
-                _color = Color.Red; 
-            }
+            _managerNetwork.Start();
             base.Initialize();
         }
 
@@ -105,7 +98,7 @@ namespace LetsCreateNetworkGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(_color);
+            GraphicsDevice.Clear(_managerNetwork.Active ? Color.Green : Color.Red);
 
             spriteBatch.Begin();
             if (_managerNetwork.Active)

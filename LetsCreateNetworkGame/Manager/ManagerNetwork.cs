@@ -78,20 +78,47 @@ namespace LetsCreateNetworkGame
             NetIncomingMessage inc;
             while ((inc = _client.ReadMessage()) != null)
             {
-                if(inc.MessageType != NetIncomingMessageType.Data) continue;
-                var packageType = (PacketType)inc.ReadByte();
-                switch (packageType)
+                switch (inc.MessageType)
                 {
-                    case PacketType.PlayerPosition:
-                        ReadPlayer(inc);
-                        break;
-
-                    case PacketType.AllPlayers:
-                        ReceiveAllPlayers(inc);
+                        case NetIncomingMessageType.Data:
+                        Data(inc);
                         break; 
-                    default:
-                        throw new ArgumentOutOfRangeException();
+
+                        case NetIncomingMessageType.StatusChanged:
+                        StatusChanged(inc);
+                        break; 
                 }
+            }
+        }
+
+        private void Data(NetIncomingMessage inc)
+        {
+            var packageType = (PacketType)inc.ReadByte();
+            switch (packageType)
+            {
+                case PacketType.PlayerPosition:
+                    ReadPlayer(inc);
+                    break;
+
+                case PacketType.AllPlayers:
+                    ReceiveAllPlayers(inc);
+                    break;
+
+                case PacketType.Kick:
+                    ReceiveKick(inc);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void StatusChanged(NetIncomingMessage inc)
+        {
+            switch ((NetConnectionStatus)inc.ReadByte())
+            {
+                case NetConnectionStatus.Disconnected:
+                    Active = false;
+                    break;
             }
         }
 
@@ -119,6 +146,14 @@ namespace LetsCreateNetworkGame
             {
                 Players.Add(player);
             }
+        }
+
+        private void ReceiveKick(NetIncomingMessage inc)
+        {
+            var username = inc.ReadString();
+            var player = Players.FirstOrDefault(p => p.Username == username);
+            if (player != null)
+                Players.Remove(player);
         }
 
         public void SendInput(Keys key)

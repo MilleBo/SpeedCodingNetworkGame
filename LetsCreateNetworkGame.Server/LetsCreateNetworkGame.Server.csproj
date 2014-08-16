@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\KickPlayerCommand.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,12 +61,14 @@
     <Compile Include="Managers\ManagerCollision.cs" />
     <Compile Include="Managers\ManagerLogger.cs" />
     <Compile Include="MyEventArgs\LogMessageEventArgs.cs" />
+    <Compile Include="MyEventArgs\NewPlayerEventArgs.cs" />
     <Compile Include="PacketFactory.cs" />
     <Compile Include="Commands\AllPlayersCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\InputCommand.cs" />
     <Compile Include="Commands\LoginCommand.cs" />
     <Compile Include="Commands\PlayerPositionCommand.cs" />
+    <Compile Include="PlayerAndConnection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />

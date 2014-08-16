@@ -14,26 +14,27 @@ namespace LetsCreateNetworkGame.Server.Commands
 {
     class LoginCommand : ICommand
     {
-        public void Run(ManagerLogger managerLogger, NetServer server, NetIncomingMessage inc, Player player, List<Player> players)
+        public void Run(ManagerLogger managerLogger, Server server, NetIncomingMessage inc, PlayerAndConnection playerAndConnection, List<PlayerAndConnection> players)
         {
             managerLogger.AddLogMessage("server", "New connection...");
             var data = inc.ReadByte();
             if (data == (byte)PacketType.Login)
             {
                 managerLogger.AddLogMessage("server", "..connection accpeted.");
-                player = CreatePlayer(inc,players);
+                playerAndConnection = CreatePlayer(inc, players);
                 inc.SenderConnection.Approve();
-                var outmsg = server.CreateMessage();
+                var outmsg = server.NetServer.CreateMessage();
                 outmsg.Write((byte)PacketType.Login);
                 outmsg.Write(true);
                 outmsg.Write(players.Count);
                 for (int n = 0; n < players.Count; n++)
                 {
-                    outmsg.WriteAllProperties(players[n]);
+                    outmsg.WriteAllProperties(players[n].Player);
                 }
-                server.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+                server.NetServer.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
                 var command = new PlayerPositionCommand();
-                command.Run(managerLogger, server,inc,player,players);
+                command.Run(managerLogger, server,inc,playerAndConnection,players);
+                server.SendNewPlayerEvent(playerAndConnection.Player.Username);
             }
             else
             {
@@ -41,7 +42,7 @@ namespace LetsCreateNetworkGame.Server.Commands
             }
         }
 
-        private Player CreatePlayer(NetIncomingMessage inc, List<Player> players)
+        private PlayerAndConnection CreatePlayer(NetIncomingMessage inc, List<PlayerAndConnection> players)
         {
             var random = new Random();
             var player = new Player
@@ -50,8 +51,9 @@ namespace LetsCreateNetworkGame.Server.Commands
                 XPosition = random.Next(0, 750),
                 YPosition = random.Next(0, 420)
             };
-            players.Add(player);
-            return player;
+            var playerAndConnection = new PlayerAndConnection(player, inc.SenderConnection);
+            players.Add(playerAndConnection);
+            return playerAndConnection;
         }
 
     }

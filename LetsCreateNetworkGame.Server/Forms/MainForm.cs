@@ -26,7 +26,19 @@ namespace LetsCreateNetworkGame.Server.Forms
             _managerLogger = new ManagerLogger();
             _managerLogger.NewLogMessageEvent += NewLogMessageEvent;
             _server = new Server(_managerLogger);
+            _server.NewPlayerEvent += NewPlayerEvent;
             InitializeComponent();
+        }
+
+        void NewPlayerEvent(object sender, NewPlayerEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new EventHandler<NewPlayerEventArgs>(NewPlayerEvent), sender, e);
+                return; 
+            }
+
+            lstPlayers.Items.Add(e.Username); 
         }
 
         void NewLogMessageEvent(object sender, LogMessageEventArgs e)
@@ -59,6 +71,23 @@ namespace LetsCreateNetworkGame.Server.Forms
             }
         }
 
-        
+        #region Context Menu Players 
+
+        private void cmnPlayersKick_Click(object sender, EventArgs e)
+        {
+            if (lstPlayers.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select a player first");
+                return; 
+            }
+
+            _server.KickPlayer(lstPlayers.SelectedIndex); 
+            lstPlayers.Items.RemoveAt(lstPlayers.SelectedIndex);
+
+        }
+
+        #endregion 
+
+
     }
 }

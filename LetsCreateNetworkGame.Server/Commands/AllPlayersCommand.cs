@@ -14,17 +14,17 @@ namespace LetsCreateNetworkGame.Server.Commands
 {
     class AllPlayersCommand : ICommand
     {
-        public void Run(ManagerLogger managerLogger, NetServer server, NetIncomingMessage inc, Player player, List<Player> players)
+        public void Run(ManagerLogger managerLogger, Server server, NetIncomingMessage inc, PlayerAndConnection playerAndConnection, List<PlayerAndConnection> players)
         {
             managerLogger.AddLogMessage("server", "Sending full player list");
-            var outmessage = server.CreateMessage();
+            var outmessage = server.NetServer.CreateMessage();
             outmessage.Write((byte)PacketType.AllPlayers);
             outmessage.Write(players.Count);
             foreach (var p in players)
             {
-                outmessage.WriteAllProperties(p);
+                outmessage.WriteAllProperties(p.Player);
             }
-            server.SendToAll(outmessage, NetDeliveryMethod.ReliableOrdered);
+            server.NetServer.SendToAll(outmessage, NetDeliveryMethod.ReliableOrdered);
         }
     }
 }

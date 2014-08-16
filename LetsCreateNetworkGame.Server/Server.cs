@@ -11,6 +11,7 @@ using System.Net.Configuration;
 using LetsCreateNetworkGame.Library;
 using LetsCreateNetworkGame.Server.Commands;
 using LetsCreateNetworkGame.Server.Managers;
+using LetsCreateNetworkGame.Server.MyEventArgs;
 using Lidgren.Network;
 using Microsoft.Xna.Framework.Input;
 
@@ -18,34 +19,35 @@ namespace LetsCreateNetworkGame.Server
 {
     class Server
     {
+        public event EventHandler<NewPlayerEventArgs> NewPlayerEvent;
         private readonly ManagerLogger _managerLogger;
-        private List<Player> _players;
+        private List<PlayerAndConnection> _players;
         private NetPeerConfiguration _config;
-        private NetServer _server; 
+        public NetServer NetServer { get; private set; }
 
         public Server(ManagerLogger managerLogger)
         {
             _managerLogger = managerLogger;
-            _players = new List<Player>();
+            _players = new List<PlayerAndConnection>();
             _config = new NetPeerConfiguration("networkGame") { Port = 14241 };
             _config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
-            _server = new NetServer(_config);      
+            NetServer = new NetServer(_config);      
         }
 
         public void Run()
         {
-            _server.Start();
+            NetServer.Start();
             Console.WriteLine("Server started...");
             _managerLogger.AddLogMessage("Server","Server started...");
             while (true)
             {
                 NetIncomingMessage inc;
-                if ((inc = _server.ReadMessage()) == null) continue;
+                if ((inc = NetServer.ReadMessage()) == null) continue;
                 switch (inc.MessageType)
                 {
                     case NetIncomingMessageType.ConnectionApproval:
                         var login = new LoginCommand();
-                        login.Run(_managerLogger, _server,inc, null,_players);
+                        login.Run(_managerLogger, this, inc, null,_players);
                         break;
                     case NetIncomingMessageType.Data:
                         Data(inc); 
@@ -58,7 +60,20 @@ namespace LetsCreateNetworkGame.Server
         {
             var packetType = (PacketType) inc.ReadByte();
             var command = PacketFactory.GetCommand(packetType); 
-            command.Run(_managerLogger, _server,inc, null,_players);
+            command.Run(_managerLogger, this,inc, null,_players);
+        }
+
+
+        public void SendNewPlayerEvent(string username)
+        {
+            if(NewPlayerEvent != null)
+                NewPlayerEvent(this,new NewPlayerEventArgs(username));
+        }
+
+        public void KickPlayer(int playerIndex)
+        {
+            var command = PacketFactory.GetCommand(PacketType.Kick);
+            command.Run(_managerLogger,this, null, _players[playerIndex],_players);
         }
     }
 }

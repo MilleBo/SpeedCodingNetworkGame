@@ -17,13 +17,13 @@ namespace LetsCreateNetworkGame.Server.Commands
 {
     class InputCommand : ICommand
     {
-        public void Run(ManagerLogger managerLogger, NetServer server, NetIncomingMessage inc, Player player, List<Player> players)
+        public void Run(ManagerLogger managerLogger, Server server, NetIncomingMessage inc, PlayerAndConnection playerAndConnection, List<PlayerAndConnection> players)
         {
             managerLogger.AddLogMessage("server", "Received new input");
             var key = (Keys)inc.ReadByte();
             var name = inc.ReadString();
-            player = players.FirstOrDefault(p => p.Username == name);
-            if (player == null)
+            playerAndConnection = players.FirstOrDefault(p => p.Player.Username == name);
+            if (playerAndConnection == null)
             {
                 managerLogger.AddLogMessage("server", string.Format("Could not find player with name {0}", name));
                 return;
@@ -51,15 +51,16 @@ namespace LetsCreateNetworkGame.Server.Commands
                     break;
             }
 
+            var player = playerAndConnection.Player; 
             if (!ManagerCollision.CheckCollision(new Rectangle(player.XPosition + x, player.YPosition + y, 100, 50),
-                player.Username, players))
+                player.Username, players.Select(p => p.Player).ToList()))
             {
                 player.XPosition += x;
                 player.YPosition += y;
 
 
                 var command = new PlayerPositionCommand();
-                command.Run(managerLogger, server, inc, player, players);
+                command.Run(managerLogger, server, inc, playerAndConnection, players);
             }
         }
     }

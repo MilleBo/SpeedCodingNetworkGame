@@ -11,3 +11,16 @@ C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsC
 C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\Microsoft.Xna.Framework.xml
 C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.Forms.MainForm.resources
 C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.csproj.GenerateResource.Cache
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\LetsCreateNetworkGame.Server.exe.config
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\LetsCreateNetworkGame.Server.exe
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\LetsCreateNetworkGame.Server.pdb
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\LetsCreateNetworkGame.Library.dll
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\Lidgren.Network.dll
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\Microsoft.Xna.Framework.dll
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\LetsCreateNetworkGame.Library.pdb
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\bin\Debug\Microsoft.Xna.Framework.xml
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.csprojResolveAssemblyReference.cache
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.Forms.MainForm.resources
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.csproj.GenerateResource.Cache
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.exe
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame.Server\obj\Debug\LetsCreateNetworkGame.Server.pdb

@@ -11,6 +11,7 @@ namespace LetsCreateNetworkGame.Library
         Login,
         PlayerPosition,
         AllPlayers,
-        Input
+        Input,
+        Kick
     }
 }

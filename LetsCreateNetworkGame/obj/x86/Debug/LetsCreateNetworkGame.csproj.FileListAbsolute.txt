@@ -12,3 +12,15 @@ c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsC
 c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\LetsCreateNetworkGame.Library.pdb
 c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Content\white_background.xnb
 C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Content\font.xnb
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\SDL.dll
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Content\font.xnb
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Content\white_background.xnb
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\LetsCreateNetworkGame.Library.dll
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Lidgren.Network.dll
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\MonoGame.Framework.dll
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\OpenTK.dll
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Tao.Sdl.dll
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\LetsCreateNetworkGame.Library.pdb
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\obj\x86\Debug\LetsCreateNetworkGame.exe
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\obj\x86\Debug\LetsCreateNetworkGame.pdb
+D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\obj\x86\Debug\LetsCreateNetworkGame.csprojResolveAssemblyReference.cache

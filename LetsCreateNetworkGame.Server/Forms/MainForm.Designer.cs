@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grpServerOperations = new System.Windows.Forms.GroupBox();
             this.btnStopServer = new System.Windows.Forms.Button();
             this.btnStartServer = new System.Windows.Forms.Button();
@@ -35,9 +36,15 @@
             this.dgwServerStatusLog = new System.Windows.Forms.DataGridView();
             this.clmId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.grpPlayers = new System.Windows.Forms.GroupBox();
+            this.lstPlayers = new System.Windows.Forms.ListBox();
+            this.cmnuPlayers = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmnPlayersKick = new System.Windows.Forms.ToolStripMenuItem();
             this.grpServerOperations.SuspendLayout();
             this.grpServerStatusLog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwServerStatusLog)).BeginInit();
+            this.grpPlayers.SuspendLayout();
+            this.cmnuPlayers.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpServerOperations
@@ -46,7 +53,7 @@
             this.grpServerOperations.Controls.Add(this.btnStartServer);
             this.grpServerOperations.Location = new System.Drawing.Point(12, 12);
             this.grpServerOperations.Name = "grpServerOperations";
-            this.grpServerOperations.Size = new System.Drawing.Size(148, 82);
+            this.grpServerOperations.Size = new System.Drawing.Size(295, 53);
             this.grpServerOperations.TabIndex = 0;
             this.grpServerOperations.TabStop = false;
             this.grpServerOperations.Text = "Server Operations";
@@ -54,7 +61,7 @@
             // btnStopServer
             // 
             this.btnStopServer.Enabled = false;
-            this.btnStopServer.Location = new System.Drawing.Point(6, 48);
+            this.btnStopServer.Location = new System.Drawing.Point(147, 19);
             this.btnStopServer.Name = "btnStopServer";
             this.btnStopServer.Size = new System.Drawing.Size(135, 23);
             this.btnStopServer.TabIndex = 1;
@@ -75,7 +82,7 @@
             // grpServerStatusLog
             // 
             this.grpServerStatusLog.Controls.Add(this.dgwServerStatusLog);
-            this.grpServerStatusLog.Location = new System.Drawing.Point(166, 12);
+            this.grpServerStatusLog.Location = new System.Drawing.Point(166, 71);
             this.grpServerStatusLog.Name = "grpServerStatusLog";
             this.grpServerStatusLog.Size = new System.Drawing.Size(490, 333);
             this.grpServerStatusLog.TabIndex = 1;
@@ -104,11 +111,45 @@
             this.clmMessage.HeaderText = "Message";
             this.clmMessage.Name = "clmMessage";
             // 
+            // grpPlayers
+            // 
+            this.grpPlayers.Controls.Add(this.lstPlayers);
+            this.grpPlayers.Location = new System.Drawing.Point(12, 71);
+            this.grpPlayers.Name = "grpPlayers";
+            this.grpPlayers.Size = new System.Drawing.Size(148, 333);
+            this.grpPlayers.TabIndex = 2;
+            this.grpPlayers.TabStop = false;
+            this.grpPlayers.Text = "Players";
+            // 
+            // lstPlayers
+            // 
+            this.lstPlayers.ContextMenuStrip = this.cmnuPlayers;
+            this.lstPlayers.FormattingEnabled = true;
+            this.lstPlayers.Location = new System.Drawing.Point(6, 19);
+            this.lstPlayers.Name = "lstPlayers";
+            this.lstPlayers.Size = new System.Drawing.Size(135, 303);
+            this.lstPlayers.TabIndex = 0;
+            // 
+            // cmnuPlayers
+            // 
+            this.cmnuPlayers.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmnPlayersKick});
+            this.cmnuPlayers.Name = "cmnuPlayers";
+            this.cmnuPlayers.Size = new System.Drawing.Size(97, 26);
+            // 
+            // cmnPlayersKick
+            // 
+            this.cmnPlayersKick.Name = "cmnPlayersKick";
+            this.cmnPlayersKick.Size = new System.Drawing.Size(152, 22);
+            this.cmnPlayersKick.Text = "Kick";
+            this.cmnPlayersKick.Click += new System.EventHandler(this.cmnPlayersKick_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 357);
+            this.ClientSize = new System.Drawing.Size(668, 412);
+            this.Controls.Add(this.grpPlayers);
             this.Controls.Add(this.grpServerStatusLog);
             this.Controls.Add(this.grpServerOperations);
             this.Name = "MainForm";
@@ -116,6 +157,8 @@
             this.grpServerOperations.ResumeLayout(false);
             this.grpServerStatusLog.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgwServerStatusLog)).EndInit();
+            this.grpPlayers.ResumeLayout(false);
+            this.cmnuPlayers.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -129,5 +172,9 @@
         private System.Windows.Forms.DataGridView dgwServerStatusLog;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmId;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmMessage;
+        private System.Windows.Forms.GroupBox grpPlayers;
+        private System.Windows.Forms.ListBox lstPlayers;
+        private System.Windows.Forms.ContextMenuStrip cmnuPlayers;
+        private System.Windows.Forms.ToolStripMenuItem cmnPlayersKick;
     }
 }
