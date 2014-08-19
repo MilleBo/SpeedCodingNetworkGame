@@ -35,9 +35,20 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BaseObject.cs" />
+    <Compile Include="Component.cs" />
+    <Compile Include="Components\Animation.cs" />
+    <Compile Include="Components\MainPlayer.cs" />
+    <Compile Include="Components\Name.cs" />
+    <Compile Include="Components\Sprite.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Manager\ManagerInput.cs" />
     <Compile Include="Manager\ManagerNetwork.cs" />
+    <Compile Include="Manager\ManagerPlayers.cs" />
+    <Compile Include="MyEventArgs\KickPlayerEventArgs.cs" />
+    <Compile Include="MyEventArgs\PlayerUpdateEventArgs.cs" />
+    <Compile Include="MyEventArgs\NewInputEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +89,14 @@
   <ItemGroup>
     <Content Include="Content\white_background.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Octorok.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Octorok_bullet.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

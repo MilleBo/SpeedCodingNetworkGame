@@ -24,3 +24,5 @@ D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug
 D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\obj\x86\Debug\LetsCreateNetworkGame.exe
 D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\obj\x86\Debug\LetsCreateNetworkGame.pdb
 D:\Programmering\LetsCreateNetworkGame\LetsCreateNetworkGame\obj\x86\Debug\LetsCreateNetworkGame.csprojResolveAssemblyReference.cache
+C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Content\Octorok.xnb
+C:\Users\Mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame\bin\WindowsGL\Debug\Content\Octorok_bullet.xnb

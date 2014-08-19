@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LetsCreateNetworkGame.Library;
+using LetsCreateNetworkGame.MyEventArgs;
 using Lidgren.Network;
 using Microsoft.Xna.Framework.Input;
 
@@ -16,16 +17,13 @@ namespace LetsCreateNetworkGame
     class ManagerNetwork
     {
         private NetClient _client;
-        public List<Player> Players { get; set; }
 
         public string Username { get; set; }
 
         public bool Active { get; set; }
 
-        public ManagerNetwork()
-        {
-            Players = new List<Player>();
-        }
+        public event EventHandler<PlayerUpdateEventArgs> PlayerUpdateEvent;
+        public event EventHandler<KickPlayerEventArgs> KickPlayerEvent; 
 
         public bool Start()
         {
@@ -97,7 +95,12 @@ namespace LetsCreateNetworkGame
             switch (packageType)
             {
                 case PacketType.PlayerPosition:
-                    ReadPlayer(inc);
+                    var player = ReadPlayer(inc);
+                    if (PlayerUpdateEvent != null)
+                    {
+                        PlayerUpdateEvent(this, new PlayerUpdateEventArgs(new List<Player> { player}));
+                    }
+
                     break;
 
                 case PacketType.AllPlayers:
@@ -122,38 +125,35 @@ namespace LetsCreateNetworkGame
             }
         }
 
-
         private void ReceiveAllPlayers(NetIncomingMessage inc)
         {
+            var list = new List<Player>(); 
             var count = inc.ReadInt32();
             for (int n = 0; n < count; n++)
             {
-                ReadPlayer(inc);
+                list.Add(ReadPlayer(inc));
+            }
+
+            if (PlayerUpdateEvent != null)
+            {
+                PlayerUpdateEvent(this,new PlayerUpdateEventArgs(list));
             }
         }
 
-        private void ReadPlayer(NetIncomingMessage inc)
+        private Player ReadPlayer(NetIncomingMessage inc)
         {
             var player = new Player();
             inc.ReadAllProperties(player);
-            if (Players.Any(p => p.Username == player.Username))
-            {
-                var oldPlayer = Players.FirstOrDefault(p => p.Username == player.Username);
-                oldPlayer.XPosition = player.XPosition;
-                oldPlayer.YPosition = player.YPosition;
-            }
-            else
-            {
-                Players.Add(player);
-            }
+            return player;
         }
 
         private void ReceiveKick(NetIncomingMessage inc)
         {
             var username = inc.ReadString();
-            var player = Players.FirstOrDefault(p => p.Username == username);
-            if (player != null)
-                Players.Remove(player);
+            if (KickPlayerEvent != null)
+            {
+                KickPlayerEvent(this,new KickPlayerEventArgs(username));
+            }
         }
 
         public void SendInput(Keys key)

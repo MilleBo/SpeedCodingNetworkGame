@@ -6,6 +6,7 @@
 //------------------------------------------------------
 #region Using Statements
 
+using LetsCreateNetworkGame.Library;
 using LetsCreateNetworkGame.Manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,10 +24,9 @@ namespace LetsCreateNetworkGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private ManagerNetwork _managerNetwork;
-        private ManagerInput _managerInput; 
-        private Color _color; //For test
-        private Texture2D _texture; //For test
-        private SpriteFont _font; //For test
+        private ManagerInput _managerInput;
+        private ManagerPlayers _managerPlayers; 
+
 
         public Game1()
             : base()
@@ -34,8 +34,8 @@ namespace LetsCreateNetworkGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             _managerNetwork = new ManagerNetwork();
-            _managerInput = new ManagerInput(_managerNetwork);
-            _color = Color.CornflowerBlue;
+            _managerInput = new ManagerInput();
+            _managerPlayers = new ManagerPlayers(_managerNetwork);
         }
 
         /// <summary>
@@ -48,7 +48,6 @@ namespace LetsCreateNetworkGame
         {
             // TODO: Add your initialization logic here
 
-            _managerNetwork.Start();
             base.Initialize();
         }
 
@@ -60,9 +59,8 @@ namespace LetsCreateNetworkGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            _texture = Content.Load<Texture2D>("white_background");
-            _font = Content.Load<SpriteFont>("font");
-
+            _managerPlayers.LoadContent(Content);
+            _managerNetwork.Start();
             // TODO: use this.Content to load your game content here
         }
 
@@ -89,6 +87,7 @@ namespace LetsCreateNetworkGame
 
             _managerNetwork.Update();
             _managerInput.Update(gameTime.ElapsedGameTime.Milliseconds);
+            _managerPlayers.Update(gameTime.ElapsedGameTime.Milliseconds);
             base.Update(gameTime);
         }
 
@@ -103,14 +102,7 @@ namespace LetsCreateNetworkGame
             spriteBatch.Begin();
             if (_managerNetwork.Active)
             {
-                foreach (var player in _managerNetwork.Players)
-                {
-                    spriteBatch.Draw(_texture,new Rectangle(player.XPosition,player.YPosition,100,50),Color.BlueViolet);
-                    if (player.Username != _managerNetwork.Username)
-                    {
-                        spriteBatch.DrawString(_font, string.Format("<{0}>",player.Username), new Vector2(player.XPosition + 20, player.YPosition + 20), Color.Black);
-                    }
-                }            
+                _managerPlayers.Draw(spriteBatch);         
             }
             spriteBatch.End();
 
