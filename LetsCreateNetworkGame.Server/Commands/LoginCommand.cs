@@ -14,27 +14,27 @@ namespace LetsCreateNetworkGame.Server.Commands
 {
     class LoginCommand : ICommand
     {
-        public void Run(ManagerLogger managerLogger, Server server, NetIncomingMessage inc, PlayerAndConnection playerAndConnection, List<PlayerAndConnection> players)
+        public void Run(ManagerLogger managerLogger, Server server, NetIncomingMessage inc, PlayerAndConnection playerAndConnection, GameRoom gameRoom)
         {
             managerLogger.AddLogMessage("server", "New connection...");
             var data = inc.ReadByte();
             if (data == (byte)PacketType.Login)
             {
                 managerLogger.AddLogMessage("server", "..connection accpeted.");
-                playerAndConnection = CreatePlayer(inc, players);
+                playerAndConnection = CreatePlayer(inc, gameRoom.Players);
                 inc.SenderConnection.Approve();
                 var outmsg = server.NetServer.CreateMessage();
                 outmsg.Write((byte)PacketType.Login);
                 outmsg.Write(true);
-                outmsg.Write(players.Count);
-                for (int n = 0; n < players.Count; n++)
+                outmsg.Write(gameRoom.Players.Count);
+                for (int n = 0; n < gameRoom.Players.Count; n++)
                 {
-                    outmsg.WriteAllProperties(players[n].Player);
+                    outmsg.WriteAllProperties(gameRoom.Players[n].Player);
                 }
                 server.NetServer.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
                 var command = new PlayerPositionCommand();
-                command.Run(managerLogger, server,inc,playerAndConnection,players);
-                server.SendNewPlayerEvent(playerAndConnection.Player.Username);
+                command.Run(managerLogger, server,inc,playerAndConnection,gameRoom);
+                server.SendNewPlayerEvent(playerAndConnection.Player.Username, gameRoom.GameRoomId);
             }
             else
             {

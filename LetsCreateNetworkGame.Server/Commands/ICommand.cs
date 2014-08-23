@@ -13,6 +13,6 @@ namespace LetsCreateNetworkGame.Server.Commands
 {
     interface ICommand
     {
-        void Run(ManagerLogger managerLogger, Server server, NetIncomingMessage inc, PlayerAndConnection playerAndConnection, List<PlayerAndConnection> players);
+        void Run(ManagerLogger managerLogger, Server server, NetIncomingMessage inc, PlayerAndConnection playerAndConnection, GameRoom gameRoom);
     }
 }

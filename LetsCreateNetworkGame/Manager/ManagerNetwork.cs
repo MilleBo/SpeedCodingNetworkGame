@@ -20,6 +20,8 @@ namespace LetsCreateNetworkGame
 
         public string Username { get; set; }
 
+        public string GroupId { get; private set; }
+
         public bool Active { get; set; }
 
         public event EventHandler<PlayerUpdateEventArgs> PlayerUpdateEvent;
@@ -31,7 +33,9 @@ namespace LetsCreateNetworkGame
             _client = new NetClient(new NetPeerConfiguration("networkGame"));
             _client.Start();
             Username = "name_" + random.Next(0, 100);
+            GroupId = "test";
             var outmsg = _client.CreateMessage();
+            outmsg.Write(GroupId);
             outmsg.Write((byte)PacketType.Login);
             outmsg.Write(Username);
             _client.Connect("localhost", 14241, outmsg);
@@ -160,6 +164,7 @@ namespace LetsCreateNetworkGame
         {
             var outmessage = _client.CreateMessage();
             outmessage.Write((byte)PacketType.Input);
+            outmessage.Write(GroupId);
             outmessage.Write((byte)key);
             outmessage.Write(Username);
             _client.SendMessage(outmessage, NetDeliveryMethod.ReliableOrdered);

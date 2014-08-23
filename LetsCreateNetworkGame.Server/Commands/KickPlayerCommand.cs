@@ -13,7 +13,7 @@ namespace LetsCreateNetworkGame.Server.Commands
 {
     class KickPlayerCommand : ICommand
     {
-        public void Run(ManagerLogger managerLogger, Server server, NetIncomingMessage inc, PlayerAndConnection playerAndConnection, List<PlayerAndConnection> players)
+        public void Run(ManagerLogger managerLogger, Server server, NetIncomingMessage inc, PlayerAndConnection playerAndConnection, GameRoom gameRoom)
         {
             managerLogger.AddLogMessage("server",string.Format("Kicking {0}",playerAndConnection.Player.Username));
             var outmessage = server.NetServer.CreateMessage();

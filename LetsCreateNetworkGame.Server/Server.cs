@@ -21,14 +21,14 @@ namespace LetsCreateNetworkGame.Server
     {
         public event EventHandler<NewPlayerEventArgs> NewPlayerEvent;
         private readonly ManagerLogger _managerLogger;
-        private List<PlayerAndConnection> _players;
+        private List<GameRoom> _gameRooms;  
         private NetPeerConfiguration _config;
         public NetServer NetServer { get; private set; }
 
         public Server(ManagerLogger managerLogger)
         {
             _managerLogger = managerLogger;
-            _players = new List<PlayerAndConnection>();
+            _gameRooms = new List<GameRoom>();
             _config = new NetPeerConfiguration("networkGame") { Port = 14241 };
             _config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
             NetServer = new NetServer(_config);      
@@ -47,7 +47,8 @@ namespace LetsCreateNetworkGame.Server
                 {
                     case NetIncomingMessageType.ConnectionApproval:
                         var login = new LoginCommand();
-                        login.Run(_managerLogger, this, inc, null,_players);
+                        var gameRoom = GetGameRoomById(inc.ReadString());
+                        login.Run(_managerLogger, this, inc, null, gameRoom);
                         break;
                     case NetIncomingMessageType.Data:
                         Data(inc); 
@@ -59,21 +60,35 @@ namespace LetsCreateNetworkGame.Server
         private void Data(NetIncomingMessage inc)
         {
             var packetType = (PacketType) inc.ReadByte();
+            var gameRoom = GetGameRoomById(inc.ReadString());
             var command = PacketFactory.GetCommand(packetType); 
-            command.Run(_managerLogger, this,inc, null,_players);
+            command.Run(_managerLogger, this,inc, null, gameRoom);
         }
 
 
-        public void SendNewPlayerEvent(string username)
+        public void SendNewPlayerEvent(string username, string gameGroupId)
         {
             if(NewPlayerEvent != null)
-                NewPlayerEvent(this,new NewPlayerEventArgs(username));
+                NewPlayerEvent(this,new NewPlayerEventArgs(string.Format("{0}[{1}]",username, gameGroupId)));
         }
 
-        public void KickPlayer(int playerIndex)
+        public void KickPlayer(string username, string gameGroupId)
         {
             var command = PacketFactory.GetCommand(PacketType.Kick);
-            command.Run(_managerLogger,this, null, _players[playerIndex],_players);
+            var gameGroup = GetGameRoomById(gameGroupId);
+            command.Run(_managerLogger,this, null, gameGroup.Players.FirstOrDefault(p => p.Player.Username == username),gameGroup);
         }
+
+        private GameRoom GetGameRoomById(string id)
+        {
+            var gameRoom = _gameRooms.FirstOrDefault(g => g.GameRoomId == id);
+            if (gameRoom == null)
+            {
+                gameRoom = new GameRoom(id);
+                _gameRooms.Add(gameRoom);
+            }
+            return gameRoom; 
+        }
+
     }
 }

@@ -81,7 +81,8 @@ namespace LetsCreateNetworkGame.Server.Forms
                 return; 
             }
 
-            _server.KickPlayer(lstPlayers.SelectedIndex); 
+            var usernameAndGroup = lstPlayers.Items[lstPlayers.SelectedIndex].ToString().Split(new[] {'[', ']'});
+            _server.KickPlayer(usernameAndGroup[0],usernameAndGroup[1]); 
             lstPlayers.Items.RemoveAt(lstPlayers.SelectedIndex);
 
         }
