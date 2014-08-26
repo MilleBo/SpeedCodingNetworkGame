@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using LetsCreateNetworkGame.Library;
 using LetsCreateNetworkGame.Server.Managers;
 using Lidgren.Network;
+using Microsoft.Xna.Framework;
 
 namespace LetsCreateNetworkGame.Server.Commands
 {
@@ -21,7 +22,7 @@ namespace LetsCreateNetworkGame.Server.Commands
             if (data == (byte)PacketType.Login)
             {
                 managerLogger.AddLogMessage("server", "..connection accpeted.");
-                playerAndConnection = CreatePlayer(inc, gameRoom.Players);
+                playerAndConnection = CreatePlayer(inc, gameRoom.Players, gameRoom.ManagerCamera);
                 inc.SenderConnection.Approve();
                 var outmsg = server.NetServer.CreateMessage();
                 outmsg.Write((byte)PacketType.Login);
@@ -42,15 +43,21 @@ namespace LetsCreateNetworkGame.Server.Commands
             }
         }
 
-        private PlayerAndConnection CreatePlayer(NetIncomingMessage inc, List<PlayerAndConnection> players)
+        private PlayerAndConnection CreatePlayer(NetIncomingMessage inc, List<PlayerAndConnection> players, ManagerCamera managerCamera)
         {
             var random = new Random();
             var player = new Player
             {
                 Username = inc.ReadString(),
                 XPosition = random.Next(0, 750),
-                YPosition = random.Next(0, 420)
+                YPosition = random.Next(0, 420),
             };
+
+            var playerVectorPosition = new Vector2(player.XPosition, player.YPosition);
+            var screenPosition = managerCamera.WorldToScreenPosition(playerVectorPosition);
+            player.ScreenXPosition = (int) screenPosition.X;
+            player.ScreenYPosition = (int) screenPosition.Y;
+            player.Visible = managerCamera.InScreenCheck(playerVectorPosition);
             var playerAndConnection = new PlayerAndConnection(player, inc.SenderConnection);
             players.Add(playerAndConnection);
             return playerAndConnection;

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\KickPlayerCommand.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +60,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GameRoom.cs" />
+    <Compile Include="Managers\ManagerCamera.cs" />
     <Compile Include="Managers\ManagerCollision.cs" />
     <Compile Include="Managers\ManagerLogger.cs" />
     <Compile Include="MyEventArgs\LogMessageEventArgs.cs" />

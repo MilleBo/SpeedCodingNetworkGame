@@ -84,7 +84,7 @@ namespace LetsCreateNetworkGame.Server
             var gameRoom = _gameRooms.FirstOrDefault(g => g.GameRoomId == id);
             if (gameRoom == null)
             {
-                gameRoom = new GameRoom(id);
+                gameRoom = new GameRoom(id, this, _managerLogger);
                 _gameRooms.Add(gameRoom);
             }
             return gameRoom; 

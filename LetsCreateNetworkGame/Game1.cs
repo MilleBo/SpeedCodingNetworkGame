@@ -36,6 +36,7 @@ namespace LetsCreateNetworkGame
             _managerNetwork = new ManagerNetwork();
             _managerInput = new ManagerInput();
             _managerPlayers = new ManagerPlayers(_managerNetwork);
+
         }
 
         /// <summary>

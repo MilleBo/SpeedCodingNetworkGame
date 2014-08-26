@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using LetsCreateNetworkGame;
 using LetsCreateNetworkGame.Components;
+using LetsCreateNetworkGame.Library;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -23,6 +24,8 @@ namespace LetsCreateZelda.Components
         public Vector2 Position { get; private set; }
 
         public Color Color { get; set; }
+
+        public bool Visible { get; private set; }
 
         public Sprite(Texture2D texture, int width, int height, Vector2 position)
         {
@@ -47,6 +50,9 @@ namespace LetsCreateZelda.Components
 
         public override void Draw(SpriteBatch spritebatch)
         {
+            if (!Visible)
+                return; 
+
             var animation = GetComponent<Animation>(ComponentType.Animation);
             if (animation != null)
             {
@@ -113,11 +119,19 @@ namespace LetsCreateZelda.Components
 
         }
 
-        public void UpdatePosition(int xPosition, int yPosition)
+        public void UpdatePosition(Player player, bool cameraUpdate)
         {
-            var x = xPosition - Position.X;
-            var y = yPosition - Position.Y; 
-            Move(x,y);
+            if (cameraUpdate)
+            {
+                Position = new Vector2(player.ScreenXPosition,player.ScreenYPosition);
+            }
+            else
+            {
+                var x = player.ScreenXPosition - Position.X;
+                var y = player.ScreenYPosition - Position.Y;
+                Visible = player.Visible;
+                Move(x, y);
+            }
         }
     }
 }

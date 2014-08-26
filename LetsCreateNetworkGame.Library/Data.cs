@@ -12,6 +12,7 @@ namespace LetsCreateNetworkGame.Library
         PlayerPosition,
         AllPlayers,
         Input,
-        Kick
+        Kick,
+        CameraUpdate
     }
 }

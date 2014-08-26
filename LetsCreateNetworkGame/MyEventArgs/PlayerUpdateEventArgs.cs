@@ -9,10 +9,12 @@ namespace LetsCreateNetworkGame.MyEventArgs
     class PlayerUpdateEventArgs : EventArgs
     {
         public List<Player> Players { get; set; }
+        public bool CameraUpdate { get; set; }
 
-        public PlayerUpdateEventArgs(List<Player> players)
+        public PlayerUpdateEventArgs(List<Player> players, bool cameraUpdate)
         {
-            Players = players; 
+            Players = players;
+            CameraUpdate = cameraUpdate;
         }
     }
 }

@@ -102,7 +102,7 @@ namespace LetsCreateNetworkGame
                     var player = ReadPlayer(inc);
                     if (PlayerUpdateEvent != null)
                     {
-                        PlayerUpdateEvent(this, new PlayerUpdateEventArgs(new List<Player> { player}));
+                        PlayerUpdateEvent(this, new PlayerUpdateEventArgs(new List<Player> { player},  false));
                     }
 
                     break;
@@ -114,6 +114,7 @@ namespace LetsCreateNetworkGame
                 case PacketType.Kick:
                     ReceiveKick(inc);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -131,7 +132,8 @@ namespace LetsCreateNetworkGame
 
         private void ReceiveAllPlayers(NetIncomingMessage inc)
         {
-            var list = new List<Player>(); 
+            var list = new List<Player>();
+            var cameraUpdate = inc.ReadBoolean();
             var count = inc.ReadInt32();
             for (int n = 0; n < count; n++)
             {
@@ -140,7 +142,7 @@ namespace LetsCreateNetworkGame
 
             if (PlayerUpdateEvent != null)
             {
-                PlayerUpdateEvent(this,new PlayerUpdateEventArgs(list));
+                PlayerUpdateEvent(this,new PlayerUpdateEventArgs(list, cameraUpdate));
             }
         }
 

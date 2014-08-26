@@ -58,6 +58,14 @@ namespace LetsCreateNetworkGame.Server.Commands
                 player.XPosition += x;
                 player.YPosition += y;
 
+                player.Visible = gameRoom.ManagerCamera.InScreenCheck(new Vector2(player.XPosition, player.YPosition));
+                if (player.Visible)
+                {
+                    var screenPosition =
+                        gameRoom.ManagerCamera.WorldToScreenPosition(new Vector2(player.XPosition, player.YPosition));
+                    player.ScreenXPosition = (int) screenPosition.X;
+                    player.ScreenYPosition = (int) screenPosition.Y; 
+                }
 
                 var command = new PlayerPositionCommand();
                 command.Run(managerLogger, server, inc, playerAndConnection, gameRoom);
