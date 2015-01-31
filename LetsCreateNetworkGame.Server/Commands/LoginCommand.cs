@@ -30,7 +30,13 @@ namespace LetsCreateNetworkGame.Server.Commands
                 outmsg.Write(gameRoom.Players.Count);
                 for (int n = 0; n < gameRoom.Players.Count; n++)
                 {
-                    outmsg.WriteAllProperties(gameRoom.Players[n].Player);
+                    var p = gameRoom.Players[n];
+                    outmsg.Write(p.Player.Username);
+                    outmsg.Write(p.Player.XPosition);
+                    outmsg.Write(p.Player.YPosition);
+                    outmsg.Write(p.Player.ScreenXPosition);
+                    outmsg.Write(p.Player.ScreenYPosition);
+                    outmsg.Write(p.Player.Visible);
                 }
                 server.NetServer.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
                 var command = new PlayerPositionCommand();

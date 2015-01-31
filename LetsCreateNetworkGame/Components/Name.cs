@@ -31,7 +31,8 @@ namespace LetsCreateNetworkGame.Components
         {
             var sprite = GetComponent<Sprite>(ComponentType.Sprite);
             if (sprite == null)
-                return; 
+                return;
+            var i = GetOwnerId();
             spritebatch.DrawString(_font, string.Format("<{0}>",GetOwnerId()),new Vector2(sprite.Position.X - 10, sprite.Position.Y  - 10),Color.Black);
         }
     }

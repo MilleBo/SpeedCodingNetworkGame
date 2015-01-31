@@ -27,13 +27,14 @@ namespace LetsCreateZelda.Components
 
         public bool Visible { get; private set; }
 
-        public Sprite(Texture2D texture, int width, int height, Vector2 position)
+        public Sprite(Texture2D texture, int width, int height, Vector2 position, Color color, bool visible)
         {
             _texture = texture;
             Width = width;
             Height = height;
             Position = position;
-            Color = Color.White; 
+            Color = color;
+            Visible = visible;
         }
 
         public override ComponentType ComponentType
@@ -119,17 +120,17 @@ namespace LetsCreateZelda.Components
 
         }
 
-        public void UpdatePosition(Player player, bool cameraUpdate)
+        public void UpdatePosition(Entity entity, bool cameraUpdate)
         {
             if (cameraUpdate)
             {
-                Position = new Vector2(player.ScreenXPosition,player.ScreenYPosition);
+                Position = new Vector2(entity.ScreenXPosition, entity.ScreenYPosition);
             }
             else
             {
-                var x = player.ScreenXPosition - Position.X;
-                var y = player.ScreenYPosition - Position.Y;
-                Visible = player.Visible;
+                var x = entity.ScreenXPosition - Position.X;
+                var y = entity.ScreenYPosition - Position.Y;
+                Visible = entity.Visible;
                 Move(x, y);
             }
         }

@@ -13,6 +13,8 @@ namespace LetsCreateNetworkGame.Library
         AllPlayers,
         Input,
         Kick,
-        CameraUpdate
+        CameraUpdate,
+        AddEnemy,
+        AllEnemies
     }
 }

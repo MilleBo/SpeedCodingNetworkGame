@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using LetsCreateNetworkGame.Library;
 using LetsCreateNetworkGame.Server.Commands;
 using LetsCreateNetworkGame.Server.Managers;
 using Microsoft.Xna.Framework;
@@ -30,6 +32,7 @@ namespace LetsCreateNetworkGame.Server
         private Server _server; 
         public string GameRoomId { get; set; }
         public List<PlayerAndConnection> Players { get; set; }
+        public List<Enemy> Enemies { get; set; } 
 
         public ManagerCamera ManagerCamera { get; private set; }
 
@@ -38,6 +41,7 @@ namespace LetsCreateNetworkGame.Server
             GameRoomId = gameRoomId;
             _server = server; 
             Players = new List<PlayerAndConnection>();
+            Enemies = new List<Enemy>();
             _cancellationTokenSource = new CancellationTokenSource();
             _task = new Task(Update,_cancellationTokenSource.Token);
             _task.Start();
@@ -72,25 +76,29 @@ namespace LetsCreateNetworkGame.Server
 
         private void Run()
         {
-            ManagerCamera.Move(Direction.Up); //For test
+            //ManagerCamera.Move(Direction.Up); //For test
             ManagerCamera.Update(0);
 
-            foreach (var playerAndConnection in Players)
+            var list = new List<Entity>(); 
+            list.AddRange(Players.Select(p => p.Player));
+            list.AddRange(Enemies);
+            foreach (var entity in list)
             {
-                var player = playerAndConnection.Player;
-                var playerPosition = new Vector2(player.XPosition, player.YPosition);
-                if (ManagerCamera.InScreenCheck(playerPosition))
+                var position = new Vector2(entity.XPosition, entity.YPosition);
+                if (ManagerCamera.InScreenCheck(position))
                 {
                     var screenPosition =
-                        ManagerCamera.WorldToScreenPosition(new Vector2(playerPosition.X, playerPosition.Y));
+                        ManagerCamera.WorldToScreenPosition(new Vector2(position.X, position.Y));
 
-                    player.ScreenXPosition = (int) screenPosition.X;
-                    player.ScreenYPosition = (int) screenPosition.Y; 
+                    entity.ScreenXPosition = (int) screenPosition.X;
+                    entity.ScreenYPosition = (int) screenPosition.Y; 
                 }
             }
 
             var command = new AllPlayersCommand {CameraUpdate = true};
             command.Run(_logger, _server, null, null, this);
+            var commandE = new AllEnemiesCommand { CameraUpdate = true };
+            commandE.Run(_logger, _server, null, null, this);
         }
 
         private void WaitForPlayer()
@@ -100,6 +108,15 @@ namespace LetsCreateNetworkGame.Server
                 _logger.AddLogMessage("Room - " + GameRoomId, "Got enough players, start run camera.");
                 _roomState = RoomState.Run;
             }
+        }
+
+        public void AddEnemy()
+        {
+            var random = new Random();
+            //Generate enemies for test
+            Enemies.Add(new Enemy(0, random.Next(0, 600), random.Next(0, 400), 0, 0, true));
+            _logger.AddLogMessage("Room - " + GameRoomId, 
+                string.Format("Adding new enemy with Unique ID {0}", Enemies.Last().UniqueId));
         }
 
         public void CancelRoom()

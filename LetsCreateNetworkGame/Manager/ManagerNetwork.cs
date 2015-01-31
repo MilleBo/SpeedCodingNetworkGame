@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using LetsCreateNetworkGame.Library;
 using LetsCreateNetworkGame.MyEventArgs;
 using Lidgren.Network;
@@ -25,7 +26,8 @@ namespace LetsCreateNetworkGame
         public bool Active { get; set; }
 
         public event EventHandler<PlayerUpdateEventArgs> PlayerUpdateEvent;
-        public event EventHandler<KickPlayerEventArgs> KickPlayerEvent; 
+        public event EventHandler<KickPlayerEventArgs> KickPlayerEvent;
+        public event EventHandler<EnemyUpdateEventArgs> EnemyUpdateEvent; 
 
         public bool Start()
         {
@@ -115,10 +117,15 @@ namespace LetsCreateNetworkGame
                     ReceiveKick(inc);
                     break;
 
+                case PacketType.AllEnemies:
+                    ReceiveAllEnemies(inc);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+
 
         private void StatusChanged(NetIncomingMessage inc)
         {
@@ -146,11 +153,45 @@ namespace LetsCreateNetworkGame
             }
         }
 
+        private void ReceiveAllEnemies(NetIncomingMessage inc)
+        {
+            var list = new List<Enemy>();
+            var cameraUpdate = inc.ReadBoolean();
+            var count = inc.ReadInt32();
+            for (int n = 0; n < count; n++)
+            {
+                list.Add(ReadEnemy(inc));
+            }
+
+            if (EnemyUpdateEvent != null)
+            {
+                EnemyUpdateEvent(this, new EnemyUpdateEventArgs(list, cameraUpdate));
+            }
+        }
+
         private Player ReadPlayer(NetIncomingMessage inc)
         {
             var player = new Player();
-            inc.ReadAllProperties(player);
+            player.Username = inc.ReadString();
+            player.XPosition = inc.ReadInt32();
+            player.YPosition = inc.ReadInt32();
+            player.ScreenXPosition = inc.ReadInt32();
+            player.ScreenYPosition = inc.ReadInt32();
+            player.Visible = inc.ReadBoolean();
             return player;
+        }
+
+        private Enemy ReadEnemy(NetIncomingMessage inc)
+        {
+            var enemy = new Enemy();
+            enemy.UniqueId = inc.ReadInt32();
+            enemy.EnemyId = inc.ReadInt32();
+            enemy.XPosition = inc.ReadInt32();
+            enemy.YPosition = inc.ReadInt32();
+            enemy.ScreenXPosition = inc.ReadInt32();
+            enemy.ScreenYPosition = inc.ReadInt32();
+            enemy.Visible = inc.ReadBoolean();
+            return enemy;
         }
 
         private void ReceiveKick(NetIncomingMessage inc)

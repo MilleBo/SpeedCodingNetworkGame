@@ -22,7 +22,12 @@ namespace LetsCreateNetworkGame.Server.Commands
                 managerLogger.AddLogMessage("server", "Sending out new player position to all in group " + gameRoom.GameRoomId);
                 var outmessage = server.NetServer.CreateMessage();
                 outmessage.Write((byte) PacketType.PlayerPosition);
-                outmessage.WriteAllProperties(playerAndConnection.Player);
+                outmessage.Write(playerAndConnection.Player.Username);
+                outmessage.Write(playerAndConnection.Player.XPosition);
+                outmessage.Write(playerAndConnection.Player.YPosition);
+                outmessage.Write(playerAndConnection.Player.ScreenXPosition);
+                outmessage.Write(playerAndConnection.Player.ScreenYPosition);
+                outmessage.Write(playerAndConnection.Player.Visible);
                 server.NetServer.SendMessage(outmessage, gameRoom.Players.Select(p => p.Connection).ToList(),
                     NetDeliveryMethod.ReliableOrdered, 0);
             }

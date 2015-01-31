@@ -25,7 +25,8 @@ namespace LetsCreateNetworkGame
         SpriteBatch spriteBatch;
         private ManagerNetwork _managerNetwork;
         private ManagerInput _managerInput;
-        private ManagerPlayers _managerPlayers; 
+        private ManagerPlayers _managerPlayers;
+        private ManagerEnemies _managerEnemies;
 
 
         public Game1()
@@ -36,6 +37,7 @@ namespace LetsCreateNetworkGame
             _managerNetwork = new ManagerNetwork();
             _managerInput = new ManagerInput();
             _managerPlayers = new ManagerPlayers(_managerNetwork);
+            _managerEnemies = new ManagerEnemies(_managerNetwork);
 
         }
 
@@ -61,6 +63,7 @@ namespace LetsCreateNetworkGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             _managerPlayers.LoadContent(Content);
+            _managerEnemies.LoadContent(Content);
             _managerNetwork.Start();
             // TODO: use this.Content to load your game content here
         }
@@ -89,6 +92,7 @@ namespace LetsCreateNetworkGame
             _managerNetwork.Update();
             _managerInput.Update(gameTime.ElapsedGameTime.Milliseconds);
             _managerPlayers.Update(gameTime.ElapsedGameTime.Milliseconds);
+            _managerEnemies.Update(gameTime.ElapsedGameTime.Milliseconds);
             base.Update(gameTime);
         }
 
@@ -103,7 +107,8 @@ namespace LetsCreateNetworkGame
             spriteBatch.Begin();
             if (_managerNetwork.Active)
             {
-                _managerPlayers.Draw(spriteBatch);         
+                _managerPlayers.Draw(spriteBatch);  
+                _managerEnemies.Draw(spriteBatch);
             }
             spriteBatch.End();
 

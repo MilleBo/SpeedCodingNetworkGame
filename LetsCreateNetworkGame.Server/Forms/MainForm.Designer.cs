@@ -40,6 +40,7 @@
             this.lstPlayers = new System.Windows.Forms.ListBox();
             this.cmnuPlayers = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmnPlayersKick = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAddEnemy = new System.Windows.Forms.Button();
             this.grpServerOperations.SuspendLayout();
             this.grpServerStatusLog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwServerStatusLog)).BeginInit();
@@ -140,15 +141,26 @@
             // cmnPlayersKick
             // 
             this.cmnPlayersKick.Name = "cmnPlayersKick";
-            this.cmnPlayersKick.Size = new System.Drawing.Size(152, 22);
+            this.cmnPlayersKick.Size = new System.Drawing.Size(96, 22);
             this.cmnPlayersKick.Text = "Kick";
             this.cmnPlayersKick.Click += new System.EventHandler(this.cmnPlayersKick_Click);
+            // 
+            // btnAddEnemy
+            // 
+            this.btnAddEnemy.Location = new System.Drawing.Point(313, 31);
+            this.btnAddEnemy.Name = "btnAddEnemy";
+            this.btnAddEnemy.Size = new System.Drawing.Size(199, 23);
+            this.btnAddEnemy.TabIndex = 3;
+            this.btnAddEnemy.Text = "Add enemy for fun";
+            this.btnAddEnemy.UseVisualStyleBackColor = true;
+            this.btnAddEnemy.Click += new System.EventHandler(this.btnAddEnemy_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 412);
+            this.Controls.Add(this.btnAddEnemy);
             this.Controls.Add(this.grpPlayers);
             this.Controls.Add(this.grpServerStatusLog);
             this.Controls.Add(this.grpServerOperations);
@@ -176,5 +188,6 @@
         private System.Windows.Forms.ListBox lstPlayers;
         private System.Windows.Forms.ContextMenuStrip cmnuPlayers;
         private System.Windows.Forms.ToolStripMenuItem cmnPlayersKick;
+        private System.Windows.Forms.Button btnAddEnemy;
     }
 }

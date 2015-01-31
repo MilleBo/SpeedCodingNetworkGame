@@ -34,8 +34,7 @@ namespace LetsCreateNetworkGame.Manager
                 if (baseObject != null)
                 {
                     var sprite = baseObject.GetComponent<Sprite>(ComponentType.Sprite);
-                    sprite.UpdatePosition(player, e.CameraUpdate);
-                    
+                    sprite.UpdatePosition(player, e.CameraUpdate);           
                 }
                 else
                 {
@@ -47,7 +46,7 @@ namespace LetsCreateNetworkGame.Manager
         private void CreateObject(Player player)
         {
             var baseObject = new BaseObject {Username = player.Username}; 
-            baseObject.AddComponent(new Sprite(_texture, 32,32, new Vector2(player.ScreenXPosition,player.ScreenYPosition)));
+            baseObject.AddComponent(new Sprite(_texture, 32,32, new Vector2(player.ScreenXPosition,player.ScreenYPosition), Color.White, player.Visible));
             baseObject.AddComponent(new Animation(16,16,2));
             if (player.Username == _managerNetwork.Username)
             {

@@ -89,6 +89,11 @@ namespace LetsCreateNetworkGame.Server.Forms
 
         #endregion 
 
+        private void btnAddEnemy_Click(object sender, EventArgs e)
+        {
+            _server.AddEnemy(); 
+        }
+
 
     }
 }
