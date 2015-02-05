@@ -9,22 +9,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LetsCreateNetworkGame.Library
+namespace LetsCreateNetworkGame.Library.AI.Movement
 {
-    public class Entity
+    public abstract class BaseMovement
     {
         public Position Position { get; set; }
 
-        public Entity(Position position)
+        public BaseMovement(Position position)
         {
             Position = position;
         }
 
-        public Entity() { }
-
-        public virtual void Update(double gameTime)
-        {
-            
-        }
+        public abstract void Update(double gameTime);
     }
 }

@@ -45,7 +45,7 @@ namespace LetsCreateNetworkGame.Manager
         private void CreateObject(Enemy enemy)
         {
             var baseObject = new BaseObject { Username = enemy.UniqueId.ToString()};
-            baseObject.AddComponent(new Sprite(_texture, 32, 32, new Vector2(enemy.ScreenXPosition, enemy.ScreenYPosition), Color.Black, enemy.Visible));
+            baseObject.AddComponent(new Sprite(_texture, 32, 32, new Vector2(enemy.Position.ScreenXPosition, enemy.Position.ScreenYPosition), Color.Black, enemy.Position.Visible));
             baseObject.AddComponent(new Animation(16, 16, 2));
             //Later we add specific component for enemies here.
             _enemies.Add(baseObject);

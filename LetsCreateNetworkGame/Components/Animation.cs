@@ -5,6 +5,7 @@
 // Youtube channel - https://www.youtube.com/user/Maloooon
 //------------------------------------------------------
 
+using LetsCreateNetworkGame.Library;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

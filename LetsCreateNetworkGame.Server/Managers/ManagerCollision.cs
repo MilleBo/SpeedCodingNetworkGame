@@ -18,7 +18,7 @@ namespace LetsCreateNetworkGame.Server.Managers
             {
                 if (player.Username != username)
                 {
-                    var playerRec = new Rectangle(player.XPosition, player.YPosition, 100, 50);
+                    var playerRec = new Rectangle(player.Position.XPosition, player.Position.YPosition, 100, 50);
                     if (playerRec.Intersects(rec))
                     {
                         return true; 

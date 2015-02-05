@@ -14,13 +14,16 @@ namespace LetsCreateNetworkGame.Library
     {
         public string Username { get; set; }
 
-        public Player(string username, int xPosition, int yPosition, int screenXPosition, int screenYPosition, bool visible)
-            :base(xPosition, yPosition, screenXPosition, screenYPosition, visible)
+        public Player(string username, Position position)
+            :base(position)
         {
             Username = username;
         }
 
-        public Player() { }
+        public Player()
+        {
+            Position = new Position();
+        }
 
     }
 }

@@ -43,9 +43,11 @@
     <Compile Include="Components\Sprite.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Manager\ManagerEnemies.cs" />
     <Compile Include="Manager\ManagerInput.cs" />
     <Compile Include="Manager\ManagerNetwork.cs" />
     <Compile Include="Manager\ManagerPlayers.cs" />
+    <Compile Include="MyEventArgs\EnemyUpdateEventArgs.cs" />
     <Compile Include="MyEventArgs\KickPlayerEventArgs.cs" />
     <Compile Include="MyEventArgs\PlayerUpdateEventArgs.cs" />
     <Compile Include="MyEventArgs\NewInputEventArgs.cs" />
@@ -69,11 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\..\..\..\Program Files %28x86%29\MonoGame\v3.0\Assemblies\WindowsGL\SDL.dll">
-      <Link>SDL.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Icon.ico" />
+    <Content Include="SDL.dll" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\font.xnb">

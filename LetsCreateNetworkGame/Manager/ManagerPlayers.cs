@@ -46,7 +46,7 @@ namespace LetsCreateNetworkGame.Manager
         private void CreateObject(Player player)
         {
             var baseObject = new BaseObject {Username = player.Username}; 
-            baseObject.AddComponent(new Sprite(_texture, 32,32, new Vector2(player.ScreenXPosition,player.ScreenYPosition), Color.White, player.Visible));
+            baseObject.AddComponent(new Sprite(_texture, 32,32, new Vector2(player.Position.ScreenXPosition,player.Position.ScreenYPosition), Color.White, player.Position.Visible));
             baseObject.AddComponent(new Animation(16,16,2));
             if (player.Username == _managerNetwork.Username)
             {

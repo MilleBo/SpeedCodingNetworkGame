@@ -30,11 +30,7 @@ namespace LetsCreateNetworkGame.Server.Commands
             {
                 outmessage.Write(e.UniqueId);
                 outmessage.Write(e.EnemyId);
-                outmessage.Write(e.XPosition);
-                outmessage.Write(e.YPosition);
-                outmessage.Write(e.ScreenXPosition);
-                outmessage.Write(e.ScreenYPosition);
-                outmessage.Write(e.Visible);
+                outmessage.WriteAllProperties(e.Position);
             }
             server.NetServer.SendMessage(outmessage, gameRoom.Players.Select(p => p.Connection).ToList(), NetDeliveryMethod.ReliableOrdered, 0);
         }

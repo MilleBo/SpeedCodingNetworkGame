@@ -29,11 +29,7 @@ namespace LetsCreateNetworkGame.Server.Commands
             foreach (var p in gameRoom.Players)
             {
                 outmessage.Write(p.Player.Username);
-                outmessage.Write(p.Player.XPosition);
-                outmessage.Write(p.Player.YPosition);
-                outmessage.Write(p.Player.ScreenXPosition);
-                outmessage.Write(p.Player.ScreenYPosition);
-                outmessage.Write(p.Player.Visible);
+                outmessage.WriteAllProperties(p.Player.Position);
             }
             server.NetServer.SendMessage(outmessage, gameRoom.Players.Select(p => p.Connection).ToList(), NetDeliveryMethod.ReliableOrdered, 0);
         }

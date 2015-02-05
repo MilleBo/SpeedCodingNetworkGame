@@ -90,5 +90,12 @@ namespace LetsCreateNetworkGame.Server
             return gameRoom; 
         }
 
+        public void AddEnemy()
+        {
+            foreach (var gameRoom in _gameRooms)
+            {
+                gameRoom.AddEnemy();
+            }
+        }
     }
 }

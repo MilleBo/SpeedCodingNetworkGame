@@ -173,11 +173,7 @@ namespace LetsCreateNetworkGame
         {
             var player = new Player();
             player.Username = inc.ReadString();
-            player.XPosition = inc.ReadInt32();
-            player.YPosition = inc.ReadInt32();
-            player.ScreenXPosition = inc.ReadInt32();
-            player.ScreenYPosition = inc.ReadInt32();
-            player.Visible = inc.ReadBoolean();
+            inc.ReadAllProperties(player.Position);
             return player;
         }
 
@@ -186,11 +182,7 @@ namespace LetsCreateNetworkGame
             var enemy = new Enemy();
             enemy.UniqueId = inc.ReadInt32();
             enemy.EnemyId = inc.ReadInt32();
-            enemy.XPosition = inc.ReadInt32();
-            enemy.YPosition = inc.ReadInt32();
-            enemy.ScreenXPosition = inc.ReadInt32();
-            enemy.ScreenYPosition = inc.ReadInt32();
-            enemy.Visible = inc.ReadBoolean();
+            inc.ReadAllProperties(enemy.Position);
             return enemy;
         }
 

@@ -51,6 +51,8 @@ namespace LetsCreateNetworkGame.Server
 
         private void Update()
         {
+            var lastIterationTime = DateTime.Now;
+            var stepSize = TimeSpan.FromSeconds(0.01); 
             while (true)
             {
                 if (_cancellationTokenSource.IsCancellationRequested)
@@ -58,40 +60,46 @@ namespace LetsCreateNetworkGame.Server
                     break;
                 }
 
-                switch (_roomState)
+                while (lastIterationTime + stepSize < DateTime.Now)
                 {
-                    case RoomState.WaitForPlayer:
-                        WaitForPlayer(); 
-                        break;
-                    case RoomState.Run:
-                        Run();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    switch (_roomState)
+                    {
+                        case RoomState.WaitForPlayer:
+                            WaitForPlayer(stepSize.Milliseconds);
+                            break;
+                        case RoomState.Run:
+                            Run(stepSize.Milliseconds);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    lastIterationTime += stepSize; 
                 }
-
-                Thread.Sleep(200);
             }
         }
 
-        private void Run()
+        private void Run(double gameTime)
         {
             //ManagerCamera.Move(Direction.Up); //For test
-            ManagerCamera.Update(0);
+            ManagerCamera.Update(gameTime);
 
             var list = new List<Entity>(); 
             list.AddRange(Players.Select(p => p.Player));
             list.AddRange(Enemies);
             foreach (var entity in list)
             {
-                var position = new Vector2(entity.XPosition, entity.YPosition);
+                entity.Update(gameTime);
+
+
+                var entityPosition = entity.Position;
+                var position = new Vector2(entityPosition.XPosition, entityPosition.YPosition);
                 if (ManagerCamera.InScreenCheck(position))
                 {
                     var screenPosition =
                         ManagerCamera.WorldToScreenPosition(new Vector2(position.X, position.Y));
 
-                    entity.ScreenXPosition = (int) screenPosition.X;
-                    entity.ScreenYPosition = (int) screenPosition.Y; 
+                    entityPosition.ScreenXPosition = (int)screenPosition.X;
+                    entityPosition.ScreenYPosition = (int)screenPosition.Y; 
                 }
             }
 
@@ -101,7 +109,7 @@ namespace LetsCreateNetworkGame.Server
             commandE.Run(_logger, _server, null, null, this);
         }
 
-        private void WaitForPlayer()
+        private void WaitForPlayer(double gameTime)
         {
             if (Players.Count > 0)
             {
@@ -114,7 +122,7 @@ namespace LetsCreateNetworkGame.Server
         {
             var random = new Random();
             //Generate enemies for test
-            Enemies.Add(new Enemy(0, random.Next(0, 600), random.Next(0, 400), 0, 0, true));
+            Enemies.Add(new Enemy(0, new Position(random.Next(0, 600), random.Next(0, 400), 0, 0, true)));
             _logger.AddLogMessage("Room - " + GameRoomId, 
                 string.Format("Adding new enemy with Unique ID {0}", Enemies.Last().UniqueId));
         }

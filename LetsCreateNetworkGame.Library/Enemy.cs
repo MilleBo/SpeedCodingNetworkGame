@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LetsCreateNetworkGame.Library.AI.Movement;
 
 namespace LetsCreateNetworkGame.Library
 {
@@ -17,13 +18,24 @@ namespace LetsCreateNetworkGame.Library
 
         public int UniqueId { get; set; }
 
-        public Enemy(int enemyId, int xPosition, int yPosition, int screenXPosition, int screenYPosition, bool visible)
-            :base(xPosition, yPosition, screenXPosition, screenYPosition, visible)
+        public BaseMovement BaseMovement { get; set; }
+
+        public Enemy(int enemyId, Position position)
+            :base(position)
         {
             EnemyId = enemyId;
             UniqueId = new Random().Next(0, 90000);
+            BaseMovement = new RandomMovement(Position);
         }
 
-        public Enemy() { }
+        public Enemy()
+        {
+            Position = new Position();
+        }
+
+        public override void Update(double gameTime)
+        {
+            BaseMovement.Update(gameTime);
+        }
     }
 }

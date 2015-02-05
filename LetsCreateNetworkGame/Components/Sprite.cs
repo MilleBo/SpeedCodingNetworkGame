@@ -124,13 +124,13 @@ namespace LetsCreateZelda.Components
         {
             if (cameraUpdate)
             {
-                Position = new Vector2(entity.ScreenXPosition, entity.ScreenYPosition);
+                Position = new Vector2(entity.Position.ScreenXPosition, entity.Position.ScreenYPosition);
             }
             else
             {
-                var x = entity.ScreenXPosition - Position.X;
-                var y = entity.ScreenYPosition - Position.Y;
-                Visible = entity.Visible;
+                var x = entity.Position.ScreenXPosition - Position.X;
+                var y = entity.Position.ScreenYPosition - Position.Y;
+                Visible = entity.Position.Visible;
                 Move(x, y);
             }
         }

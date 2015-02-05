@@ -32,11 +32,7 @@ namespace LetsCreateNetworkGame.Server.Commands
                 {
                     var p = gameRoom.Players[n];
                     outmsg.Write(p.Player.Username);
-                    outmsg.Write(p.Player.XPosition);
-                    outmsg.Write(p.Player.YPosition);
-                    outmsg.Write(p.Player.ScreenXPosition);
-                    outmsg.Write(p.Player.ScreenYPosition);
-                    outmsg.Write(p.Player.Visible);
+                    outmsg.WriteAllProperties(p.Player.Position);
                 }
                 server.NetServer.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
                 var command = new PlayerPositionCommand();
@@ -55,15 +51,13 @@ namespace LetsCreateNetworkGame.Server.Commands
             var player = new Player
             {
                 Username = inc.ReadString(),
-                XPosition = random.Next(0, 750),
-                YPosition = random.Next(0, 420),
+                Position = new Position {XPosition = random.Next(0, 750), YPosition = random.Next(0, 420) }
             };
-
-            var playerVectorPosition = new Vector2(player.XPosition, player.YPosition);
+            var playerVectorPosition = new Vector2(player.Position.XPosition, player.Position.YPosition);
             var screenPosition = managerCamera.WorldToScreenPosition(playerVectorPosition);
-            player.ScreenXPosition = (int) screenPosition.X;
-            player.ScreenYPosition = (int) screenPosition.Y;
-            player.Visible = managerCamera.InScreenCheck(playerVectorPosition);
+            player.Position.ScreenXPosition = (int) screenPosition.X;
+            player.Position.ScreenYPosition = (int) screenPosition.Y;
+            player.Position.Visible = managerCamera.InScreenCheck(playerVectorPosition);
             var playerAndConnection = new PlayerAndConnection(player, inc.SenderConnection);
             players.Add(playerAndConnection);
             return playerAndConnection;

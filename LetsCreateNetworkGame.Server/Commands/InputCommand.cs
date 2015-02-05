@@ -51,20 +51,21 @@ namespace LetsCreateNetworkGame.Server.Commands
                     break;
             }
 
-            var player = playerAndConnection.Player; 
-            if (!ManagerCollision.CheckCollision(new Rectangle(player.XPosition + x, player.YPosition + y, 100, 50),
+            var player = playerAndConnection.Player;
+            var position = playerAndConnection.Player.Position; 
+            if (!ManagerCollision.CheckCollision(new Rectangle(position.XPosition + x, position.YPosition + y, 100, 50),
                 player.Username, gameRoom.Players.Select(p => p.Player).ToList()))
             {
-                player.XPosition += x;
-                player.YPosition += y;
+                position.XPosition += x;
+                position.YPosition += y;
 
-                player.Visible = gameRoom.ManagerCamera.InScreenCheck(new Vector2(player.XPosition, player.YPosition));
-                if (player.Visible)
+                position.Visible = gameRoom.ManagerCamera.InScreenCheck(new Vector2(position.XPosition, position.YPosition));
+                if (position.Visible)
                 {
                     var screenPosition =
-                        gameRoom.ManagerCamera.WorldToScreenPosition(new Vector2(player.XPosition, player.YPosition));
-                    player.ScreenXPosition = (int) screenPosition.X;
-                    player.ScreenYPosition = (int) screenPosition.Y; 
+                        gameRoom.ManagerCamera.WorldToScreenPosition(new Vector2(position.XPosition, position.YPosition));
+                    position.ScreenXPosition = (int) screenPosition.X;
+                    position.ScreenYPosition = (int) screenPosition.Y; 
                 }
 
                 var command = new PlayerPositionCommand();
