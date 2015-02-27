@@ -18,7 +18,6 @@ namespace LetsCreateNetworkGame.Library.AI.Movement
         private double _count;
         private Direction _direction;
         private Random _rnd;
-        private int _speed; 
 
         public RandomMovement(Position position) : base(position)
         {
@@ -26,7 +25,7 @@ namespace LetsCreateNetworkGame.Library.AI.Movement
             _count = 0;
             _rnd = new Random();
             _direction = (Direction) _rnd.Next(0, 3);
-            _speed = 1; 
+            Speed = 1; 
         }
 
         public override void Update(double gameTime)
@@ -41,16 +40,16 @@ namespace LetsCreateNetworkGame.Library.AI.Movement
             switch (_direction)
             {
                 case Direction.Left:
-                    Position.XPosition -= _speed; 
+                    Position.XPosition -= Speed; 
                     break;
                 case Direction.Right:
-                    Position.XPosition += _speed; 
+                    Position.XPosition += Speed; 
                     break;
                 case Direction.Up:
-                    Position.YPosition -= _speed;
+                    Position.YPosition -= Speed;
                     break;
                 case Direction.Down:
-                    Position.YPosition += _speed; 
+                    Position.YPosition += Speed; 
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

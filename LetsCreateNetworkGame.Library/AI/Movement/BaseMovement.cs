@@ -13,11 +13,13 @@ namespace LetsCreateNetworkGame.Library.AI.Movement
 {
     public abstract class BaseMovement
     {
+        protected int Speed; 
         public Position Position { get; set; }
 
-        public BaseMovement(Position position)
+        protected BaseMovement(Position position)
         {
             Position = position;
+            Speed = 1;
         }
 
         public abstract void Update(double gameTime);
