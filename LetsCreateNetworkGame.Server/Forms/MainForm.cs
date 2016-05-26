@@ -2,7 +2,7 @@
 // 
 // Copyright - (c) - 2014 - Mille Boström 
 //
-// Youtube channel - https://www.youtube.com/user/Maloooon
+// Youtube channel - http://www.speedcoding.net
 //------------------------------------------------------
 using System;
 using System.Threading;
@@ -22,7 +22,6 @@ namespace LetsCreateNetworkGame.Server.Forms
 
         public MainForm()
         {
-
             _managerLogger = new ManagerLogger();
             _managerLogger.NewLogMessageEvent += NewLogMessageEvent;
             _server = new Server(_managerLogger);

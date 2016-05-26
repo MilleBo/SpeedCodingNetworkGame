@@ -1,5 +1,0 @@
-c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Library\bin\Debug\LetsCreateNetworkGame.Library.dll
-c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Library\bin\Debug\LetsCreateNetworkGame.Library.pdb
-c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Library\obj\Debug\LetsCreateNetworkGame.Library.csprojResolveAssemblyReference.cache
-c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Library\obj\Debug\LetsCreateNetworkGame.Library.dll
-c:\users\mille\documents\visual studio 2013\Projects\LetsCreateNetworkGame\LetsCreateNetworkGame.Library\obj\Debug\LetsCreateNetworkGame.Library.pdb

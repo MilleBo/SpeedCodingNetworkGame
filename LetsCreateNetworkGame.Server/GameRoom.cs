@@ -2,7 +2,7 @@
 // 
 // Copyright - (c) - 2014 - Mille Boström 
 //
-// Youtube channel - https://www.youtube.com/user/Maloooon
+// Youtube channel - http://www.speedcoding.net
 //------------------------------------------------------
 
 using System;
@@ -10,8 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using LetsCreateNetworkGame.Library;
-using LetsCreateNetworkGame.Library.AI.Movement;
+using LetsCreateNetworkGame.OpenGL.Library;
+using LetsCreateNetworkGame.OpenGL.Library.AI.Movement;
 using LetsCreateNetworkGame.Server.Commands;
 using LetsCreateNetworkGame.Server.Managers;
 using Microsoft.Xna.Framework;
@@ -124,7 +124,7 @@ namespace LetsCreateNetworkGame.Server
             var random = new Random();
             //Generate enemies for test
             var enemy = new Enemy(0, new Position(random.Next(0, 600), random.Next(0, 400), 0, 0, true));
-            enemy.BaseMovement = new AttackMovement(enemy.Position, Players.Select(p => p.Player).ToList());
+            enemy.BaseMovement = new RandomMovement(enemy.Position); //new AttackMovement(enemy.Position, Players.Select(p => p.Player).ToList());
             Enemies.Add(enemy);
             _logger.AddLogMessage("Room - " + GameRoomId, 
                 string.Format("Adding new enemy with Unique ID {0}", Enemies.Last().UniqueId));

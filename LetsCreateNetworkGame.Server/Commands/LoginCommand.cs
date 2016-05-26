@@ -2,11 +2,11 @@
 // 
 // Copyright - (c) - 2014 - Mille Boström 
 //
-// Youtube channel - https://www.youtube.com/user/Maloooon
+// Youtube channel - http://www.speedcoding.net
 //------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using LetsCreateNetworkGame.Library;
+using LetsCreateNetworkGame.OpenGL.Library;
 using LetsCreateNetworkGame.Server.Managers;
 using Lidgren.Network;
 using Microsoft.Xna.Framework;
@@ -21,12 +21,11 @@ namespace LetsCreateNetworkGame.Server.Commands
             var data = inc.ReadByte();
             if (data == (byte)PacketType.Login)
             {
+                inc.SenderConnection.Approve();
                 managerLogger.AddLogMessage("server", "..connection accpeted.");
                 playerAndConnection = CreatePlayer(inc, gameRoom.Players, gameRoom.ManagerCamera);
-                inc.SenderConnection.Approve();
                 var outmsg = server.NetServer.CreateMessage();
                 outmsg.Write((byte)PacketType.Login);
-                outmsg.Write(true);
                 outmsg.Write(gameRoom.Players.Count);
                 for (int n = 0; n < gameRoom.Players.Count; n++)
                 {
@@ -36,7 +35,7 @@ namespace LetsCreateNetworkGame.Server.Commands
                 }
                 server.NetServer.SendMessage(outmsg, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
                 var command = new PlayerPositionCommand();
-                command.Run(managerLogger, server,inc,playerAndConnection,gameRoom);
+                command.Run(managerLogger, server, inc, playerAndConnection, gameRoom);
                 server.SendNewPlayerEvent(playerAndConnection.Player.Username, gameRoom.GameRoomId);
             }
             else

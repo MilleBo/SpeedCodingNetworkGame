@@ -2,12 +2,10 @@
 // 
 // Copyright - (c) - 2014 - Mille Boström 
 //
-// Youtube channel - https://www.youtube.com/user/Maloooon
+// Youtube channel - http://www.speedcoding.net
 //------------------------------------------------------
-using System;
-using System.Collections.Generic;
+
 using System.Linq;
-using LetsCreateNetworkGame.Library;
 using LetsCreateNetworkGame.Server.Managers;
 using Lidgren.Network;
 using Microsoft.Xna.Framework;
